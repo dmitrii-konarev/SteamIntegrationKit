@@ -34,10 +34,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnJoinLobby OnFailure;
+
+    virtual void Activate() override;
+
 private:
 	FSIK_SteamId Var_LobbyId;
 	void OnLobbyEnter(LobbyEnter_t* LobbyEnter, bool bIOFailure);
-	virtual void Activate() override;
 	SteamAPICall_t CallbackHandle;
 	CCallResult<USIK_JoinLobby_AsyncFunction, LobbyEnter_t> CallResult;
 };

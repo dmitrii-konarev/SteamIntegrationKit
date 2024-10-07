@@ -35,11 +35,12 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FCreateLobbyDelegate OnFailure;
 
+    virtual void Activate() override;
+
 private:
 	int32 Var_nMaxMembers;
 	TEnumAsByte<ESIK_LobbyType> Var_LobbyType;
 	void OnCreateLobbyCallback(LobbyCreated_t* LobbyCreated, bool bIOFailure);
-	virtual void Activate() override;
 	SteamAPICall_t CallbackHandle;
 	CCallResult<USIK_SteamCreateLobby_AsyncFunction, LobbyCreated_t> OnCreateLobbyCallResult;
 };

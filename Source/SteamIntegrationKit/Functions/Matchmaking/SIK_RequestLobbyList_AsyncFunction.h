@@ -33,9 +33,11 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnRequestLobbyList OnFailure;
+
+    virtual void Activate() override;
+
 private:
 	void OnLobbyListReceived(LobbyMatchList_t* LobbyMatches, bool bIOFailure);
-	virtual void Activate() override;
 	SteamAPICall_t CallbackHandle;
 	CCallResult<USIK_RequestLobbyList_AsyncFunction, LobbyMatchList_t> CallResult;
 };
