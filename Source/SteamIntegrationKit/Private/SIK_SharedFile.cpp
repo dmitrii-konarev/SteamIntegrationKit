@@ -22,6 +22,11 @@ FString USIK_SharedFile::ConvertUint8ArrayToString(TArray<uint8> Array)
 	return FString(Array.Num(), UTF8_TO_TCHAR(Array.GetData()));
 }
 
+FString USIK_SharedFile::ConvertHexUint8ArrayToString(TArray<uint8> Array)
+{
+	return BytesToHex(Array.GetData(), Array.Num());
+}	
+
 TArray<uint8> USIK_SharedFile::ConvertFileToUint8Array(FString FilePath, bool& bSuccess)
 {
 	TArray<uint8> Array;
@@ -69,4 +74,19 @@ bool USIK_SharedFile::IsEqualSteamId(FSIK_SteamId SteamId1, FSIK_SteamId SteamId
 bool USIK_SharedFile::IsEqualGameId(FSIK_GameID GameId1, FSIK_GameID GameId2)
 {
 	return GameId1.GetGameID() == GameId2.GetGameID();
+}
+
+FSIK_SteamId USIK_SharedFile::GetSteamIdFromUniqueNetId(const FUniqueNetIdRepl& UniqueNetId)
+{
+	if(!UniqueNetId.IsValid())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UniqueNetId is not valid"));
+		return FSIK_SteamId();
+	}
+	if(!UniqueNetId.GetUniqueNetId().IsValid())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UniqueNetId is not valid"));
+		return FSIK_SteamId();
+	}
+	return FSIK_SteamId(UniqueNetId.GetUniqueNetId().ToSharedRef()->ToString());
 }
